@@ -38,11 +38,11 @@ class Device:
 
 
 class DeviceSensor(Device):
-    power = 0
+    power = {'Total': 0, 'Yesterday': 0, 'Today': 0, 'Power': 0, 'Factor': 0, 'Voltage': 0, 'Current': 0}
     type = "DeviceSensor"
 
     def new_power(self, power, time):
-        self.power = power #<class 'dict'>: {'Total': 10.595, 'Yesterday': 0.094, 'Today': 0.0, 'Power': 42, 'Factor': 1.0, 'Voltage': 243, 'Current': 0.156}
+        self.power = power
         self.time = time
 
     def last_power(self):
