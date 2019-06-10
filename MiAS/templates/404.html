@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block content_title %}404 Strony nie znaleziono {% endblock %}
+
+{% block main_content   %}
+    <h2>Skorzystaj z listy po lewej lub wróć do strony głównej klikając <a href="/dashboard">tutaj </a></h2>
+
+{% endblock main_content %}
+
+{% block sidebar %}
+
+ <ul class="nav flex-column">
+            {% for i in topic_list %}
+              <li class="nav-item">
+                <a class="nav-link {% if i == active %}active {% endif %}" href="/dashboard?device={{ i }}">
+                  <span data-feather="{{ data[i].icon}}"></span>
+                  {{ data[i].name}} <span class="sr-only"></span>
+                </a>
+              </li>
+            {% endfor %}
+        </ul>
+ {% endblock sidebar %}
+

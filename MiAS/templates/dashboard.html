@@ -7,17 +7,17 @@
 
 
 
-{% block content_title %}Dashboard{% endblock %}
+{% block content_title %}{{ data[active].name}}{% endblock %}
 
 {% block main_content   %}
     <div class="container">
         <div class="btn-group-justify-content-center">
 
 
-            {% for i in topic_list %}
-                <a href="?device={{ i }}">
+            {% for object in topic_list %}
+                <a href="?device={{ object }}">
                     <button type="button" class="btn btn-primary">
-                        <span data-feather="{{ data[i].icon}}"></span> {{ data[i].name}}
+                        <span data-feather="{{ data[object].icon}}"></span> {{ data[object].name}}
                     </button>
                 </a>
 
@@ -29,7 +29,7 @@
 
     </div>
 
-{% endblock %}
+{% endblock main_content %}
 
 {% block sidebar %}
 
@@ -43,5 +43,5 @@
               </li>
             {% endfor %}
         </ul>
- {% endblock %}
+ {% endblock sidebar %}
 
