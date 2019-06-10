@@ -1,5 +1,7 @@
 class Device:
-    def __init__(self, topic, name,  icon="zap"):
+    type = "Device"
+
+    def __init__(self, topic = None, name = None,  icon="zap"):
         self.topic = topic
         self.name = name
         self.icon = icon
@@ -28,6 +30,7 @@ class Device:
 
 class DeviceSensor(Device):
     power = 0
+    type = "DeviceSensor"
 
     def new_power(self, power, time):
         self.power = power
@@ -56,5 +59,12 @@ class DictDevice:
 
     def check(self, topic):
         return topic in self.data
+
+    def list_of_topics(self):
+        return self.data.keys()
+
+    def type_device(self, topic):
+        return self.data[topic].type
+
 
 
