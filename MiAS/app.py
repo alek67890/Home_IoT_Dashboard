@@ -57,10 +57,13 @@ def handle_mqtt_message(client, userdata, message):
                 objects.data[topic[0]].ofline()
 
         if topic[2] == 'SENSOR':
-            pass
-            # power_data = json.loads(data['payload'])
-            # print(power_data['Time'])
-            # devices.data[topic[0]].new_power()
+            # pass
+            power_data = json.loads(data['payload'])
+            print(power_data['Time'])
+            time = power_data['Time']
+            power = power_data['ENERGY']
+            objects.data[topic[0]].new_power(power, time)
+            # devices.data[topic[0]].new_power()  use_power
 
         txt = topic[0] + ' is ' + data['payload'] + '->' + topic[1] + '->' + topic[2]
         print(txt)
