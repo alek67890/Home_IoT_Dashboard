@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block refresh %}<meta http-equiv="refresh" content="5" >{% endblock %}
+
+
+
+
+
+
+{% block content_title %}{{ data[active].name}}{% endblock %}
+
+{% block main_content   %}
+    <div class="container">
+
+
+    <h3>{{ data[active].name}} jest
+        {% if data[active].is_online() %}
+            {% if data[active].is_on %}włączona{% else %}wyłączona {% endif %}
+        {% else %}offline {% endif %}
+    </h3>
+
+
+
+    <div class="btn-group">
+      <a href="?device={{ data[active].topic }}&toggle=on">
+          <button type="button" class="btn btn-primary {% if data[active].is_on() %} active {% endif %}">
+              ON
+          </button>
+      </a>
+      <a href="?device={{ data[active].topic }}&toggle=off">
+          <button type="button" class="btn btn-primary {% if not data[active].is_on() %}active {% endif %}">
+              OFF
+          </button>
+      </a>
+
+    </div>
+
+
+
+    </div>
+
+
+
+
+{#        <div class="btn-group-justify-content-center">#}
+{##}
+{##}
+{#            {% for i in topic_list %}#}
+{#                <a href="?device={{ i }}">#}
+{#                    <button type="button" class="btn btn-primary">#}
+{#                        <span data-feather="{{ data[i].icon}}"></span> {{ data[i].name}}#}
+{#                    </button>#}
+{#                </a>#}
+{##}
+{#            {% endfor %}#}
+{##}
+{#        </div>#}
+
+
+{% endblock %}
+
+{% block sidebar %}
+
+ <ul class="nav flex-column">
+            {% for i in topic_list %}
+              <li class="nav-item">
+                <a class="nav-link {% if i == active %}active {% endif %}" href="?device={{ i }}">
+                  <span data-feather="{{ data[i].icon}}"></span>
+                  {{ data[i].name}} <span class="sr-only"></span>
+                </a>
+              </li>
+            {% endfor %}
+        </ul>
+ {% endblock %}
+
