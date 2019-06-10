@@ -1,13 +1,18 @@
 from flask import Flask
 from flask_mqtt import Mqtt
-import models
+
 from config import Configuration
+from devices import devices
+
+import json
 
 
-mqtt = Mqtt()
+
 
 app = Flask(__name__)
 app.config.from_object(Configuration)
+
+mqtt = Mqtt()
 mqtt.init_app(app)
 
 
@@ -15,9 +20,15 @@ mqtt.init_app(app)
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    mqtt.subscribe('POW1/stat/POWER')
-    mqtt.subscribe('POW1/tele/LWT')
-    mqtt.subscribe('POW1/tele/SENSOR')
+
+    for topic in devices.list_of_topics():
+        if devices.type_device(topic) in ["Device", "DeviceSensor"]:
+            mqtt.subscribe(topic + '/stat/POWER')
+            mqtt.subscribe(topic + '/tele/LWT')
+
+        if devices.type_device(topic) in ["DeviceSensor"]:
+            mqtt.subscribe(topic + '/tele/SENSOR')
+
 
 
 @mqtt.on_message()
@@ -26,7 +37,35 @@ def handle_mqtt_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode()
     )
-    print('topic =')
-    print(data['topic'])
-    print('payload =')
-    print(data['payload'])
+    # print('topic =')
+    # print(data['topic'])
+    # print('payload =')
+    # print(data['payload'])
+    topic = data['topic'].split('/')
+
+    if devices.check(topic[0]):
+        if topic[2] == 'POWER':
+            if data['payload'] == 'ON':
+                devices.data[topic[0]].on()
+            if data['payload'] == 'OFF':
+                devices.data[topic[0]].off()
+
+        if topic[2] == 'LWT': # Last Will / Is Online or Not
+            if data['payload'] == 'Online':
+                devices.data[topic[0]].online()
+            if data['payload'] == 'Offline':
+                devices.data[topic[0]].ofline()
+
+        if topic[2] == 'SENSOR':
+            pass
+            # power_data = json.loads(data['payload'])
+            # print(power_data['Time'])
+            # devices.data[topic[0]].new_power()
+
+        txt = topic[0] + ' is ' + data['payload'] + '->' + topic[1] + '->' + topic[2]
+        print(txt)
+
+        # print(devices.data[topic[0]].is_on())
+        # print(devices.data[topic[0]].is_online())
+
+
