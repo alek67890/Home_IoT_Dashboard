@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block refresh %}<meta http-equiv="refresh" content="100" >{% endblock %}
+{% block refresh %}<meta http-equiv="refresh" content="5" >{% endblock %}
 
-{% block sidebar %} {% endblock %}
+
 
 
 
@@ -12,26 +12,36 @@
 {% block main_content   %}
     <div class="container">
         <div class="btn-group-justify-content-center">
-            <a href="?X=1">
-            <button type="button" class="btn btn-primary">
-                <span data-feather="home"></span> Dashboard
-            </button>
-            </a>
-            <a href="?X=2">
-            <button type="button" class="btn btn-primary">
-                 <span data-feather="zap"></span> Lampki Solarne
-            </button>
-            </a>
 
-            </button>
-            </a>
+
+            {% for i in topic_list %}
+                <a href="?device={{ i }}">
+                    <button type="button" class="btn btn-primary">
+                        <span data-feather="{{ data[i].icon}}"></span> {{ data[i].name}}
+                    </button>
+                </a>
+
+            {% endfor %}
+
         </div>
+
+
+
     </div>
-
-
-
 
 {% endblock %}
 
+{% block sidebar %}
 
+ <ul class="nav flex-column">
+            {% for i in topic_list %}
+              <li class="nav-item">
+                <a class="nav-link {% if i == active %}active {% endif %}" href="?device={{ i }}">
+                  <span data-feather="{{ data[i].icon}}"></span>
+                  {{ data[i].name}} <span class="sr-only"></span>
+                </a>
+              </li>
+            {% endfor %}
+        </ul>
+ {% endblock %}
 
