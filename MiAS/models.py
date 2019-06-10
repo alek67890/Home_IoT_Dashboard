@@ -1,3 +1,12 @@
+class MainPage:
+    type = "Page"
+
+    def __init__(self, topic = None, name = None,  icon="home"):
+        self.topic = topic
+        self.name = name
+        self.icon = icon
+
+
 class Device:
     type = "Device"
 
@@ -43,7 +52,7 @@ class DeviceSensor(Device):
         return self.time
 
 
-class DictDevice:
+class DictObjects:
     data = {}
 
     def __init__(self, device=None):
