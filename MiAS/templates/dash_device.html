@@ -32,7 +32,13 @@
         </div>
 
     </div>
-
+    {% if power %}
+    <div class="container">
+        <h6>
+            Pobór prądu {{ data[active].last_power() }} W. Ostatnio zmierzono {{ data[active].last_time() }}
+        </h6>
+    </div>
+    {% endif %}
 
 {#        <div class="btn-group-justify-content-center">#}
 {##}
@@ -63,5 +69,7 @@
               </li>
             {% endfor %}
         </ul>
+
+
  {% endblock sidebar %}
 

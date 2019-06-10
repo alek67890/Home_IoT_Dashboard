@@ -11,9 +11,14 @@ def dashboard():
     if device not in objects.list_of_topics():
         abort(404)
     if device == 'home':
-        return render_template('dashboard.html', topic_list=objects.list_of_topics(), data=objects.data, active=device)
+        return render_template('dashboard.html', topic_list=objects.list_of_topics(),
+                               data=objects.data, active=device)
+    elif objects.type_device(device) in ["DeviceSensor"]:
+        return render_template('dash_device.html', topic_list=objects.list_of_topics(),
+                               data=objects.data, active=device, power=True)
     else:
-        return render_template('dash_device.html', topic_list=objects.list_of_topics(), data=objects.data, active=device)
+        return render_template('dash_device.html', topic_list=objects.list_of_topics(),
+                               data=objects.data, active=device)
 
 
 @app.route('/ok')
