@@ -28,7 +28,7 @@ def dashboard():
 
 
 def change_state(toggle, device):
-    txt = device + '/cmnd/power'
+    txt = 'cmnd/' + device + '/power'
     if toggle == 'on':
         objects.data[device].on()
         mqtt.publish(txt, 'on')
